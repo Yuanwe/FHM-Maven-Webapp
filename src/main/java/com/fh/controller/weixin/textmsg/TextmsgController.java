@@ -36,8 +36,8 @@ import com.fh.service.weixin.textmsg.TextmsgService;
 
 /** 
  * 类名称：TextmsgController
- * 创建人：FH 
- * 创建时间：2015-05-05
+ * 创建人：cuizongqiang
+ * 创建时间：2017-3-10
  */
 @Controller
 @RequestMapping(value="/textmsg")
@@ -50,7 +50,34 @@ public class TextmsgController extends BaseController {
 	private CommandService commandService;
 	@Resource(name="imgmsgService")
 	private ImgmsgService imgmsgService;
-	
+
+	/**
+	 * 列表
+	 */
+	@RequestMapping(value="/list")
+	public ModelAndView list(Page page){
+		logBefore(logger, "列表Textmsg");
+		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;}
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		try{
+			pd = this.getPageData();
+			String KEYWORD = pd.getString("KEYWORD");
+			if(null != KEYWORD && !"".equals(KEYWORD)){
+				pd.put("KEYWORD", KEYWORD.trim());
+			}
+			page.setPd(pd);
+			List<PageData>	varList = textmsgService.list(page);	//列出Textmsg列表
+			mv.setViewName("weixin/textmsg/textmsg_list");
+			mv.addObject("varList", varList);
+			mv.addObject("pd", pd);
+			mv.addObject(Const.SESSION_QX,this.getHC());	//按钮权限
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+
 	/**
 	 * 新增
 	 */
@@ -104,33 +131,7 @@ public class TextmsgController extends BaseController {
 		return mv;
 	}
 	
-	/**
-	 * 列表
-	 */
-	@RequestMapping(value="/list")
-	public ModelAndView list(Page page){
-		logBefore(logger, "列表Textmsg");
-		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;}
-		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
-		try{
-			pd = this.getPageData();
-			String KEYWORD = pd.getString("KEYWORD");
-			if(null != KEYWORD && !"".equals(KEYWORD)){
-				pd.put("KEYWORD", KEYWORD.trim());
-			}
-			page.setPd(pd);
-			List<PageData>	varList = textmsgService.list(page);	//列出Textmsg列表
-			mv.setViewName("weixin/textmsg/textmsg_list");
-			mv.addObject("varList", varList);
-			mv.addObject("pd", pd);
-			mv.addObject(Const.SESSION_QX,this.getHC());	//按钮权限
-		} catch(Exception e){
-			logger.error(e.toString(), e);
-		}
-		return mv;
-	}
-	
+
 	/**
 	 * 去新增页面
 	 */

@@ -13,7 +13,7 @@ import com.fh.util.PageData;
 import com.fh.util.UuidUtil;
 
 /**
- * 父类
+ * 父类，所有类继承
  */
 public class BaseController {
 	
@@ -62,14 +62,13 @@ public class BaseController {
 	}
 	
 	public static void logBefore(Logger logger, String interfaceName){
-		logger.info("");
-		logger.info("start");
-		logger.info(interfaceName);
-	}
+		logger.info("**********系统日志输出************");
+		logger.info("运行描述："+interfaceName);
+        logger.info("********************************");
+    }
 	
 	public static void logAfter(Logger logger){
 		logger.info("end");
-		logger.info("");
 	}
 	
 }

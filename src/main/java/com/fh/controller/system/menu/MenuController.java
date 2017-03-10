@@ -32,7 +32,7 @@ public class MenuController extends BaseController {
 	
 	/**
 	 * 显示菜单列表
-	 * @param model
+	 * @param
 	 * @return
 	 */
 	@RequestMapping
@@ -51,7 +51,7 @@ public class MenuController extends BaseController {
 	
 	/**
 	 * 请求新增菜单页面
-	 * @param model
+	 * @param
 	 * @return
 	 */
 	@RequestMapping(value="/toAdd")
@@ -70,7 +70,7 @@ public class MenuController extends BaseController {
 	/**
 	 * 保存菜单信息
 	 * @param menu
-	 * @param model
+	 * @param
 	 * @return
 	 */
 	@RequestMapping(value="/add")

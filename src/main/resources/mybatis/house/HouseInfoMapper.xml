@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="HouseInfoMapper">
+
+	<!-- 分页查询房屋列表 -->
+	<select id="getHouseInfoByPage" parameterType="page" resultType="pd">
+		SELECT t.id,
+			t.fwmc,
+			t.syzxm,
+			t.syzsfzh,
+			t.fczh,
+			t.xxdz,
+			t.sf,
+			t.shi,
+			t.jdmc,
+			t.xqmc,
+			t.lh,
+			t.mph,
+			t.dyh,
+			t.cs,
+			t.shih,
+			t.ktsl,
+			t.wssl,
+			t.zbx,
+			t.zby,
+			t.jfrq,
+			t.zt,
+			t.xian,
+			t.xiang,
+			t.sq
+		FROM t_house_info t
+		where
+			1=1
+		<if test="pd.fwmc != null and pd.fwmc != ''"><!-- 关键词检索 -->
+			and t.fwmc LIKE CONCAT(CONCAT('%', #{pd.fwmc}),'%')
+		</if>
+		<if test="pd.STATUS!=null and pd.STATUS!='' and pd.STATUS!=0"><!-- 状态检索 -->
+			and t.zt = #{pd.zt}
+		</if>
+		order by t.id
+	</select>
+	
+	<!--&lt;!&ndash; 新增&ndash;&gt;-->
+	<!--<insert id="save" parameterType="pd">-->
+		<!--insert into WEIXIN_TEXTMSG(-->
+			<!--KEYWORD,	-->
+			<!--CONTENT,	-->
+			<!--CREATETIME,	-->
+			<!--STATUS,	-->
+			<!--BZ,	-->
+			<!--TEXTMSG_ID-->
+		<!--) values (-->
+			<!--#{KEYWORD},	-->
+			<!--#{CONTENT},	-->
+			<!--#{CREATETIME},	-->
+			<!--#{STATUS},	-->
+			<!--#{BZ},	-->
+			<!--#{TEXTMSG_ID}-->
+		<!--)-->
+	<!--</insert>-->
+	<!---->
+	<!---->
+	<!--&lt;!&ndash; 删除&ndash;&gt;-->
+	<!--<delete id="delete" parameterType="pd">-->
+		<!--delete from WEIXIN_TEXTMSG-->
+		<!--where -->
+			<!--TEXTMSG_ID = #{TEXTMSG_ID}-->
+	<!--</delete>-->
+	<!---->
+	<!---->
+	<!--&lt;!&ndash; 修改 &ndash;&gt;-->
+	<!--<update id="edit" parameterType="pd">-->
+		<!--update  WEIXIN_TEXTMSG-->
+			<!--set -->
+				<!--KEYWORD = #{KEYWORD},-->
+				<!--CONTENT = #{CONTENT},-->
+				<!--STATUS = #{STATUS},-->
+				<!--BZ = #{BZ},-->
+			<!--TEXTMSG_ID = TEXTMSG_ID-->
+			<!--where -->
+				<!--TEXTMSG_ID = #{TEXTMSG_ID}-->
+	<!--</update>-->
+	<!---->
+	<!---->
+	<!--&lt;!&ndash; 通过ID获取数据 &ndash;&gt;-->
+	<!--<select id="findById" parameterType="pd" resultType="pd">-->
+		<!--select -->
+			<!--KEYWORD,	-->
+			<!--CONTENT,	-->
+			<!--CREATETIME,	-->
+			<!--STATUS,	-->
+			<!--BZ,	-->
+			<!--TEXTMSG_ID-->
+		<!--from -->
+			<!--WEIXIN_TEXTMSG-->
+		<!--where -->
+			<!--TEXTMSG_ID = #{TEXTMSG_ID}-->
+	<!--</select>-->
+	<!---->
+	<!---->
+	<!--&lt;!&ndash; 匹配关键词 &ndash;&gt;-->
+	<!--<select id="findByKw" parameterType="pd" resultType="pd" useCache="false">-->
+		<!--select -->
+			<!--CONTENT-->
+		<!--from -->
+			<!--WEIXIN_TEXTMSG-->
+		<!--where -->
+			<!--KEYWORD = #{KEYWORD}-->
+		<!--<if test="TEXTMSG_ID != null and TEXTMSG_ID != ''">-->
+			<!--and TEXTMSG_ID != #{TEXTMSG_ID} -->
+		<!--</if>-->
+		<!--<if test="STATUS == null or STATUS == ''">-->
+			<!--and STATUS = '1' -->
+		<!--</if>-->
+	<!--</select>-->
+	<!---->
+	<!---->
+
+	<!---->
+	<!--&lt;!&ndash; 列表(全部) &ndash;&gt;-->
+	<!--<select id="listAll" parameterType="pd" resultType="pd">-->
+		<!--select-->
+				<!--a.KEYWORD,	-->
+				<!--a.CONTENT,	-->
+				<!--a.CREATETIME,	-->
+				<!--a.STATUS,	-->
+				<!--a.BZ,	-->
+				<!--a.TEXTMSG_ID-->
+		<!--from -->
+				<!--WEIXIN_TEXTMSG a-->
+	<!--</select>-->
+	<!---->
+	<!--&lt;!&ndash; 批量删除 &ndash;&gt;-->
+	<!--<delete id="deleteAll" parameterType="String">-->
+		<!--delete from WEIXIN_TEXTMSG-->
+		<!--where -->
+			<!--TEXTMSG_ID in-->
+		<!--<foreach item="item" index="index" collection="array" open="(" separator="," close=")">-->
+                 <!--#{item}-->
+		<!--</foreach>-->
+	<!--</delete>-->
+	
+</mapper>
