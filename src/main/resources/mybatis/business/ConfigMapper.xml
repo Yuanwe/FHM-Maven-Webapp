@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ConfigMapper">
+
+	<!-- 通用查询结果列-->
+	<sql id="total_Columns">
+		id,
+		config_key as configKey,
+		config_value as configValue,
+		create_time as createTime,
+		update_time as updateTime,
+		status,
+		config_desc as configDesc
+	</sql>
+
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="total_Columns"/>
+		from
+		t_sys_config t
+		where
+		1=1
+		<if test="pd.configKey != null and pd.configKey != ''">
+			and t.config_key LIKE CONCAT(CONCAT('%', #{pd.configKey}),'%')
+		</if>
+		<if test="pd.configValue != null and pd.configValue != ''">
+			and t.config_value LIKE CONCAT(CONCAT('%', #{pd.configValue}),'%')
+		</if>
+		<if test="pd.status!=null and pd.status!=''"><!-- 状态检索 -->
+			and t.status = #{pd.status}
+		</if>
+		order by t.create_time asc
+	</select>
+
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into t_sys_config(
+			config_key,
+			config_value,
+			create_time,
+			update_time,
+			status,
+			config_desc
+		) values (
+			#{configKey},
+			#{configValue},
+			#{createTime},
+			null,
+			#{status},
+			#{configDesc}
+		)
+	</insert>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select
+			<include refid="total_Columns" />
+		from
+			t_sys_config
+		where
+			id = #{id}
+	</select>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  t_sys_config
+		set
+			config_value = #{configValue},
+			update_time = #{updateTime},
+			status = #{status},
+			config_desc = #{configDesc},
+			id = id
+		where
+			id = #{id}
+	</update>
+
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from t_sys_config
+		where 
+			id = #{id}
+	</delete>
+
+	<!-- 批量删除 -->
+	<delete id="deleteMany" parameterType="String">
+		delete
+		  from t_sys_config
+		where
+		  id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 匹配配置key -->
+	<select id="findByConfigKey" parameterType="pd" resultType="pd" useCache="false">
+		select
+			<include refid="total_Columns"/>
+		from
+			t_sys_config
+		where
+			config_key = #{configKey}
+		<if test="id != null and id != ''">
+			and id != #{id}
+		</if>
+		<if test="STATUS == null or STATUS == ''">
+			and status = 1
+		</if>
+	</select>
+
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+			<include refid="total_Columns" />
+		from
+			t_sys_config
+	</select>
+
+</mapper>

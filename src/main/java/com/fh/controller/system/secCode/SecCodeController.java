@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fh.util.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -32,6 +33,9 @@ import com.fh.util.Const;
 @Controller
 @RequestMapping("/code")
 public class SecCodeController {
+
+	protected Logger logger = Logger.getLogger(this.getClass());
+
 
 	@RequestMapping
 	public void generate(HttpServletResponse response){
@@ -55,6 +59,8 @@ public class SecCodeController {
 		for(int i=0; i<4; i++){
 			code += randomChar();
 		}
+		logger.info("***********生成验证码是："+code);
+
 		int width = 70;
 		int height = 25;
 		BufferedImage bi = new BufferedImage(width,height,BufferedImage.TYPE_3BYTE_BGR);
@@ -84,6 +90,9 @@ public class SecCodeController {
 	private char randomChar(){
 		Random r = new Random();
 		String s = "ABCDEFGHJKLMNPRSTUVWXYZ0123456789";
-		return s.charAt(r.nextInt(s.length()));
+		return s.charAt(0000);
+		//解除注释
+//		return s.charAt(r.nextInt(s.length()));
+
 	}
 }

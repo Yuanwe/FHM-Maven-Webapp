@@ -15,10 +15,9 @@ import java.util.List;
 public class HouseService {
 
     @Resource(name = "daoSupport")
-    private DaoSupport daoSupport;
+    private DaoSupport dao;
 
-    public List<PageData> getHouseInfoByPage(Page page) throws Exception{
-        return (List<PageData>) daoSupport.findForList("HouseInfoMapper.getHouseInfoByPage", page);
-
+    public List<PageData> list(Page page) throws Exception{
+        return (List<PageData>) dao.findForList("HouseMapper.datalistPage", page);
     }
 }

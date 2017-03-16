@@ -3,7 +3,7 @@
 <mapper namespace="HouseInfoMapper">
 
 	<!-- 分页查询房屋列表 -->
-	<select id="getHouseInfoByPage" parameterType="page" resultType="pd">
+	<select id="datalistPage" parameterType="page" resultType="pd">
 		SELECT t.id,
 			t.fwmc,
 			t.syzxm,
@@ -34,7 +34,7 @@
 		<if test="pd.fwmc != null and pd.fwmc != ''"><!-- 关键词检索 -->
 			and t.fwmc LIKE CONCAT(CONCAT('%', #{pd.fwmc}),'%')
 		</if>
-		<if test="pd.STATUS!=null and pd.STATUS!='' and pd.STATUS!=0"><!-- 状态检索 -->
+		<if test="pd.zt!=null and pd.zt!=''"><!-- 状态检索 -->
 			and t.zt = #{pd.zt}
 		</if>
 		order by t.id

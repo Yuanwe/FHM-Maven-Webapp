@@ -19,10 +19,8 @@ import com.fh.util.Tools;
 /**
 * 导入到EXCEL
 * 类名称：ObjectExcelView.java
-* 类描述： 
-* @author FH
-* 作者单位： 
-* 联系方式：
+* 类描述：导出Excel数据通用类
+* @author cuizongqiang
 * @version 1.0
  */
 public class ObjectExcelView extends AbstractExcelView{
@@ -37,9 +35,18 @@ public class ObjectExcelView extends AbstractExcelView{
 		HSSFSheet sheet;
 		HSSFCell cell;
 		response.setContentType("application/octet-stream");
-		response.setHeader("Content-Disposition", "attachment;filename="+filename+".xls");
-		sheet = workbook.createSheet("sheet1");
-		
+//		response.setHeader("Content-Disposition", "attachment;filename="+filename+".xls");
+
+		//1 获取sheetName定义文件名和sheet名称
+		if(model != null && model != null && model.get("sheetName") != null && !"".equals(model.get("sheetName"))){
+			sheet = workbook.createSheet(model.get("sheetName").toString());
+			response.setHeader("Content-Disposition", "attachment;filename="+model.get("sheetName").toString()+filename+".xls");
+		}else{
+			sheet = workbook.createSheet("sheet1");
+			response.setHeader("Content-Disposition", "attachment;filename="+filename+".xls");
+		}
+
+		//2 获取列名称
 		List<String> titles = (List<String>) model.get("titles");
 		int len = titles.size();
 		HSSFCellStyle headerStyle = workbook.createCellStyle(); //标题样式
@@ -58,7 +65,8 @@ public class ObjectExcelView extends AbstractExcelView{
 			setText(cell,title);
 		}
 		sheet.getRow(0).setHeight(height);
-		
+
+		//3 获取数据列表
 		HSSFCellStyle contentStyle = workbook.createCellStyle(); //内容样式
 		contentStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		List<PageData> varList = (List<PageData>) model.get("varList");

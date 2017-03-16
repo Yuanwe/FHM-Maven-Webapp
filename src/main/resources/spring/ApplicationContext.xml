@@ -129,6 +129,8 @@
 	           	/login_login	 			= anon
 	           	/app**/** 					= anon
 	           	/weixin/** 					= anon
+				/house/** 					= anon
+				/business/** 				= anon
 	           	/**							= authc
 				</value>
 			</property>

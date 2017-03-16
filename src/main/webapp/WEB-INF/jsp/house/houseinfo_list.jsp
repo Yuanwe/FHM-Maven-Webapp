@@ -78,7 +78,7 @@
                                     <c:forEach items="${varList}" var="var" varStatus="vs">
                                         <tr>
                                             <td class='center' style="width: 30px;">
-                                                <label><input type='checkbox' name='ids' value="${var.id}" /><span class="lbl"></span></label>
+                                                <label><input type='checkbox' name='id' value="${var.id}" /><span class="lbl"></span></label>
                                             </td>
                                             <td class='center' style="width: 30px;">${vs.index+1}</td>
                                             <td>${var.fwmc}</td>
@@ -212,7 +212,7 @@
         bootbox.confirm("确定要删除吗?", function(result) {
             if(result) {
                 top.jzts();
-                var url = "<%=basePath%>textmsg/delete.do?TEXTMSG_ID="+Id+"&tm="+new Date().getTime();
+                var url = "<%=basePath%>textmsg/delete.do?id="+Id+"&tm="+new Date().getTime();
                 $.get(url,function(data){
                     nextPage(${page.currentPage});
                 });
@@ -226,7 +226,7 @@
         var diag = new top.Dialog();
         diag.Drag=true;
         diag.Title ="编辑";
-        diag.URL = '<%=basePath%>textmsg/goEdit.do?TEXTMSG_ID='+Id;
+        diag.URL = '<%=basePath%>textmsg/goEdit.do?id='+Id;
         diag.Width = 600;
         diag.Height = 390;
         diag.CancelEvent = function(){ //关闭事件
@@ -269,11 +269,12 @@
         bootbox.confirm(msg, function(result) {
             if(result) {
                 var str = '';
-                for(var i=0;i < document.getElementsByName('ids').length;i++)
+                for(var i=0;i < document.getElementsByName('id').length;i++)
                 {
-                    if(document.getElementsByName('ids')[i].checked){
-                        if(str=='') str += document.getElementsByName('ids')[i].value;
-                        else str += ',' + document.getElementsByName('ids')[i].value;
+                    alert(document.getElementsByName('id'))
+                    if(document.getElementsByName('id')[i].checked){
+                        if(str=='') str += document.getElementsByName('id')[i].value;
+                        else str += ',' + document.getElementsByName('id')[i].value;
                     }
                 }
                 if(str==''){

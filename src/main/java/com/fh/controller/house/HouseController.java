@@ -2,7 +2,6 @@ package com.fh.controller.house;
 
 import com.fh.controller.base.BaseController;
 import com.fh.entity.Page;
-import com.fh.entity.vo.HouseInfo;
 import com.fh.service.house.HouseService;
 import com.fh.util.Const;
 import com.fh.util.PageData;
@@ -25,23 +24,29 @@ import java.util.Map;
 @RequestMapping("/house")
 public class HouseController extends BaseController {
 
+    String menuUrl = "house/list.do"; //菜单地址(权限用)
+
     @Resource(name="houseService")
     private HouseService houseService;
 
     //分页查询房屋列表
-    @RequestMapping(value = "list")
+    @RequestMapping(value = "/list")
     public ModelAndView list(Page page) throws Exception{
         logBefore(logger, "分页查询HouseInfo列表");
         ModelAndView mv = this.getModelAndView();
         PageData pd = new PageData();
         try {
             pd = this.getPageData();
+            String fwmc = pd.getString("fwmc");
+            if(null != fwmc && !"".equals(fwmc)){
+                pd.put("fwmc", fwmc.trim());
+            }
             page.setPd(pd);
-            List<PageData> list = houseService.getHouseInfoByPage(page);
+            List<PageData> list = houseService.list(page);
+            mv.setViewName("house/houseinfo_list");
             mv.addObject("varList", list);
             mv.addObject("pd", pd);
             mv.addObject(Const.SESSION_QX,this.getHC());	//按钮权限
-            mv.setViewName("house/houseinfo_list");
         }catch (Exception e){
             logger.error(e.toString(), e);
         }
