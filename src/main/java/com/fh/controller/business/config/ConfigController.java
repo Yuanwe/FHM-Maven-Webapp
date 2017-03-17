@@ -29,14 +29,9 @@ import java.util.*;
 @RequestMapping(value = "/config")
 public class ConfigController extends BaseController{
 
-
     String menuUrl = "config/list.do"; //菜单地址(权限用)
     @Resource(name="configService")
     private ConfigService configService;
-//    @Resource(name="commandService")
-//    private CommandService commandService;
-//    @Resource(name="imgmsgService")
-//    private ImgmsgService imgmsgService;
 
     /**
      * 列表
