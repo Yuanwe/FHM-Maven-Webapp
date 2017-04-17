@@ -66,7 +66,7 @@
 							<i><img src="static/login/yan.png" /></i>
 						</div>
 						<div style="float: left;" class="codediv">
-							<input type="text" name="code" id="code" class="login_code"
+							<input type="text" name="code" id="code" class="login_code" value="AAAA"
 								style="height:16px; padding-top:0px;" />
 						</div>
 						<div style="float: left;">
